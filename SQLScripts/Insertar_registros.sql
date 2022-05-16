@@ -14,16 +14,16 @@ SELECT * FROM libros;
 INSERT INTO carreras VALUES(2, 'Ingeniería en Manufactura', 1);
 SELECT * FROM carreras;
 
-CALL insert_alumno ('Jesús', 'Quiñones', 'M', 1, SYSDATE(), SYSDATE());
-CALL insert_alumno ('Jesúss', 'Quiñones', 'M', 1, SYSDATE(), SYSDATE());
-SELECT * FROM carreras;
+CALL insert_alumno (1930672, 'Oscar', 'Clemente', 'M', 1, SYSDATE(), SYSDATE());
+CALL insert_alumno (1930673,'Oscar', 'Gomez', 'M', 1, SYSDATE(), SYSDATE());
+SELECT * FROM alumnos;
 
 CALL sp_insertar_libInventario (1, 'D', TRUE);
 CALL sp_insertar_libInventario (2, 'D', TRUE);
 SELECT * FROM libros_inventario;
 
-CALL insert_prestamos (1, 1, SYSDATE(), SYSDATE(), SYSDATE(), TRUE);
-CALL insert_prestamos (2, 2, SYSDATE(), NULL, SYSDATE(), TRUE);
+CALL insert_prestamos (1, 1930672, SYSDATE(), SYSDATE(), SYSDATE(), TRUE);
+CALL insert_prestamos (2, 1930673, SYSDATE(), NULL, SYSDATE(), TRUE);
 SELECT * FROM prestamos;
 
 

@@ -29,14 +29,14 @@ ENGINE = InnoDB;
 -- Table `biblioteca`.`alumnos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `biblioteca`.`alumnos` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `matricula` INT NOT NULL,
   `nombre` VARCHAR(256) NOT NULL,
   `apellidos` VARCHAR(256) NOT NULL,
   `genero` VARCHAR(8) NOT NULL,
   `carrera_id` INT NOT NULL,
   `fecha_ingreso` DATE NOT NULL,
   `fecha_nacimiento` DATE NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`matricula`),
   INDEX `FK_alumnos_carreras_idx` (`carrera_id` ASC) VISIBLE,
   CONSTRAINT `FK_alumnos_carreras`
     FOREIGN KEY (`carrera_id`)
@@ -88,13 +88,13 @@ CREATE TABLE IF NOT EXISTS `biblioteca`.`libros` (
   CONSTRAINT `FK_recursos_tipos_recursos`
     FOREIGN KEY (`tipo_recurso_id`)
     REFERENCES `biblioteca`.`tipos_recursos` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `FK_recursos_editoriales`
     FOREIGN KEY (`editorial_id`)
     REFERENCES `biblioteca`.`editoriales` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -111,8 +111,8 @@ CREATE TABLE IF NOT EXISTS `biblioteca`.`libros_inventario` (
   CONSTRAINT `FK_inventario_libros`
     FOREIGN KEY (`libro_id`)
     REFERENCES `biblioteca`.`libros` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -122,24 +122,24 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `biblioteca`.`prestamos` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `libro_inventario_id` INT NOT NULL,
-  `alumno_id` INT NOT NULL,
+  `alumno_matricula` INT NOT NULL,
   `fecha_prestamo` DATETIME NOT NULL,
   `fecha_devuelto` DATETIME NULL,
   `fecha_debe_devolver` DATETIME NOT NULL,
   `disponible` BIT(1) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `FK_prestamos_alumnos_idx` (`alumno_id` ASC) VISIBLE,
+  INDEX `FK_prestamos_alumnos_idx` (`alumno_matricula` ASC) VISIBLE,
   INDEX `FK_prestamos_libros_inventario_idx` (`libro_inventario_id` ASC) VISIBLE,
   CONSTRAINT `FK_prestamos_alumnos`
-    FOREIGN KEY (`alumno_id`)
-    REFERENCES `biblioteca`.`alumnos` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    FOREIGN KEY (`alumno_matricula`)
+    REFERENCES `biblioteca`.`alumnos` (`matricula`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `FK_prestamos_libros_inventario`
     FOREIGN KEY (`libro_inventario_id`)
     REFERENCES `biblioteca`.`libros_inventario` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 

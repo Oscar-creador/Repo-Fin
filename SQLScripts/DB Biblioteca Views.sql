@@ -1,6 +1,6 @@
 CREATE VIEW alumnos_v AS
 SELECT
-		 a.id
+		 a.matricula
 		,a.nombre
 		,a.apellidos
         ,a.carrera_id
@@ -67,7 +67,7 @@ SELECT
         ,li.autores libro_autores
         ,li.isbn libro_isbn
         ,li.estado libro_estado
-        ,p.alumno_id 
+        ,p.alumno_matricula
         ,a.nombre alumno_nombre
         ,a.apellidos alumno_apellidos
         ,a.carrera_nombre alumno_carrera_nombre
@@ -79,4 +79,4 @@ SELECT
         INNER JOIN libros_inventario_v li
 			ON p.libro_inventario_id = li.inventario_id
 		INNER JOIN alumnos_v a
-			ON p.alumno_id = a.id
+			ON p.alumno_matricula = a.matricula
